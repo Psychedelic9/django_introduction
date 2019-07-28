@@ -14,14 +14,14 @@
 </head>
 <body>
 <div class="container page-header">
-    <h1>文章标题</h1>
+    <h1>{{ curr_article.title }}</h1>
 </div>
 <div class="container body-main">
     <div>
         <p>
-            require('bootstrap') 代码的作用是加载 Bootstrap 的所有 jQuery 插件。其中，bootstrap 模块自身并不导出任何内容。你可以通过加载安装包顶级目录下的
-            /js/*.js 文件的方式手动加载单个的 Bootstrap 插件。
-
+            {% for section in section_list %}
+            {{ curr_article.content }}
+            {% endfor %}
         </p>
     </div>
 

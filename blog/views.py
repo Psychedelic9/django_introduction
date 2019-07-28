@@ -28,3 +28,14 @@ def get_index_page(requst):
                   {
                       'article_list': all_article
                   })
+
+
+def get_detail_page(requst):
+    curr_article = Article.objects.all()[0]
+    section_list = curr_article.content.split('\n')
+    return render(requst, 'blog/detail.html',
+                  {
+                      'curr_article': curr_article,
+                      'section_list':section_list
+                  }
+                  )

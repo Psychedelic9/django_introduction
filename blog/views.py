@@ -30,12 +30,34 @@ def get_index_page(requst):
                   })
 
 
-def get_detail_page(requst):
-    curr_article = Article.objects.all()[0]
-    section_list = curr_article.content.split('\n')
-    return render(requst, 'blog/detail.html',
+def get_detail_page(request, article_id):
+    all_article = Article.objects.all()
+    current_article = None
+    previous_article_index = 0
+    next_article_index = 0
+    previous_article = None
+    next_article = None
+    for index, article in enumerate(all_article):
+        if index == 0:
+            previous_article_index = 0
+            next_article_index = index + 1
+        elif index == len(all_article) - 1:
+            previous_article_index = index - 1
+            next_article_index = index
+        else:
+            previous_article_index = index - 1
+            next_article_index = index + 1
+        if article.article_id == article_id:
+            current_article = article
+            previous_article = all_article[previous_article_index]
+            next_article = all_article[next_article_index]
+            break
+    section_list = current_article.content.split('\n')
+    return render(request, 'blog/detail.html',
                   {
-                      'curr_article': curr_article,
-                      'section_list':section_list
+                      'curr_article': current_article,
+                      'section_list': section_list,
+                      'previous_article': previous_article,
+                      'next_article': next_article
                   }
                   )
